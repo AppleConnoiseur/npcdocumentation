@@ -33,6 +33,7 @@ import HylandiaLogo from "./(showcaseImages)/Hylandia_Logo.png";
 import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
 import Shroomie from "./(showcaseImages)/Shroomie.gif";
 import Froggy from "./(showcaseImages)/Froggy.gif";
+import VoileBanner from "./(showcaseImages)/voile.png";
 import { DiscordButton } from "./discord-button";
 import { SponsorButton } from "./support-button";
 import { GitInfoButton } from "@/components/git-info-button";
@@ -116,6 +117,13 @@ const showcaseItems: ShowcaseItem[] = [
     author: "by Unknown Knight",
     image: Froggy,
     link: "",
+    type: "art",
+  },
+  {
+    title: "Voile",
+    author: "by mayuna",
+    image: VoileBanner,
+    link: "https://www.curseforge.com/hytale/mods/docs",
     type: "art",
   },
   {
@@ -308,7 +316,7 @@ export default function HomePage() {
         <div className="w-full max-w-5xl space-y-8 pt-16 text-center md:pt-0">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
-              <div className="relative mx-auto w-fit max-w-full">
+              {/* <div className="relative mx-auto w-fit max-w-full">
                 <GlowEffect
                   colors={["#FF5733", "#33FF57", "#3357FF", "#F1C40F"]}
                   mode="flowHorizontal"
@@ -325,7 +333,7 @@ export default function HomePage() {
                     <ArrowRightIcon className="h4 w-4" />
                   </Link>
                 </div>
-              </div>
+              </div> */}
               <h1 className="text-4xl font-semibold text-balance md:text-5xl">
                 <div>{messages.home.title.split("{flipwords}")[0]}</div>
                 <div>
