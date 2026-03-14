@@ -1,0 +1,9 @@
+{
+    "icon": "BookType",
+    "pages": [
+        "intro.mdx",
+        "1-create-account.mdx",
+        "2-create-mod.mdx",
+        "3-creating-pages.mdx"
+    ]
+}
