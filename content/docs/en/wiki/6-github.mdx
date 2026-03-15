@@ -1,0 +1,47 @@
+---
+title: 6 GitHub Sync
+description: How to sync your wiki documentation from a GitHub repository.
+authors:
+    - name: "Dobya"
+      url: "https://discordapp.com/users/1242082598281281629"
+---
+
+## Overview
+
+If your documentation already lives on GitHub, you can sync it directly with your mod wiki.
+Changes pushed to your repository will automatically appear on the site — no manual updates needed.
+
+<Callout type="warning">
+  Once GitHub sync is enabled, the built-in editor will be disabled.
+  All edits must be made in your repository.
+</Callout>
+
+## Setting up
+
+Go to your mod settings and scroll down to **GitHub Repository URL**.
+Paste your repository link and save.
+
+If your documentation is inside a subfolder, set the path in **Repository Path**.
+If the entire repository is documentation, leave this field empty.
+
+## Repository structure
+
+Your repository should contain `.mdx` files at the root of your documentation folder:
+```
+my-repo/
+└── docs/
+    ├── intro.mdx
+    ├── installation.mdx
+    └── usage.mdx
+```
+
+Each file becomes a page on your wiki. The filename (without `.mdx`) is used as the page slug.
+
+## Updating documentation
+
+Push changes to your repository as usual — the wiki will update automatically.
+```bash
+git add .
+git commit -m "Update documentation"
+git push
+```
