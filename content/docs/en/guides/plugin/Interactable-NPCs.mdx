@@ -259,17 +259,21 @@ Custom actions are registered with `NPCPlugin.get().registerCoreComponentType()`
 `NPCPlugin.get().registerCoreComponentType("OpenBarterShop",BuilderActionOpenBarterShop::new);`
 
 So all you have to do is extend that same API.
+![Extending](/assets/guides/Register.png)
 
 To show what that looks like in practice, here’s a custom Kweebec Merchant who opens to a dialog box with 2 buttons: Browse Wares and Goodbye. This is a small Java plugin and one .ui layout file, using the exact same InteractionInstruction pipeline from this guide.
 
 ![Demo Video](/assets/guides/DemoCustomMerchant.mp4)
 
+*Snippet from the plugin*
+![Interaction Chain](/assets/guides/InteractionCustom.png)
+
 Using the same logic, you could easily add an entire dialog tree, quest givers, and more. And that’s just when you stick to having it open a page. When combined with custom plugins, F interact can trigger anything you create. 
 
-**Challenge**: Make a Treasure Goblin who flees from the player, and explodes in a loot pile when F interact is triggered. Here are 2 guides that can help you get started
+**Challenge**: Make a Treasure Goblin who drops a loot chest when F interact is triggered. Here are 2 guides that can help you get started
 
 - NPC Tutorial: Melee Combat - https://hytalemodding.dev/en/docs/official-documentation/npc/11-melee-combat
 - NPC Meta Reference: https://hytalemodding.dev/en/docs/official-documentation/npc-doc
 
-> Hint: The Rabbit has both fleeing and F interact with out the 180 degree cone
->
+> Hint 1: The Rabbit flees from the player and registers F interact without the 180 degree cone
+> Hint 2: The Goblin_Thief flees from the player and drops a chest on death
