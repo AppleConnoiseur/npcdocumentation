@@ -28,8 +28,6 @@ import GaleWivern from "./(showcaseImages)/gale_wivern.gif";
 import WulfrumArmor from "./(showcaseImages)/Wulfrum_Armor.gif";
 import ElectricMotor from "./(showcaseImages)/HyEnergy_Electric_Motor.gif";
 import WulfrumTriangle from "./(showcaseImages)/Wulfrum_triangle.gif";
-import HylandiaBanner from "./(showcaseImages)/Hylandia_Banner.png";
-import HylandiaLogo from "./(showcaseImages)/Hylandia_Logo.png";
 import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
 import Shroomie from "./(showcaseImages)/Shroomie.gif";
 import Froggy from "./(showcaseImages)/Froggy.gif";
