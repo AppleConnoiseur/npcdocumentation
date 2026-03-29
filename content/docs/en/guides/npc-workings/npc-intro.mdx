@@ -27,6 +27,10 @@ The main beating heart of a NPC lies in the **Instructions** part of the Json fi
 A NPC uses its **Role** to lay down instruction on how it interact with the world. As if its reading from a script which is made by the writer which is ***you***.
 
 If you write a good script then the actor (NPC) will play out its part in your epic very well.
+## What is a role?
+Don your clothes, put on your make-up and rehearse your lines. Now is the time to act.
+
+The short of it is that a role defines **how** a NPC should act. How it moves, how it interacts with the environment, how it looks and what **Instructions** it has. Without a role a NPC wouldn't even know what it is.
 ## What is a instruction?
 **Instructions** are the core of your NPC. They come in many forms but the main one you will be interacting with is the humble `Instructions` block in the Json file.
 
@@ -160,8 +164,25 @@ Are they bad? No, they are in fact the best way to change how a NPC acts in cert
 ]
 ```
 > *While I'm Idle, if a player with red berries in hand are around I will seek them out. Otherwise I will wander around.*
+
+You may wonder what **"Reference"** is at the last instruction, it will be covered in another page in detail. The very quick version is that it allows you to reuse parts of a Json in many different files.
+## What to do now?
+Since you now have an inkling of what is in store for NPCs, the first thing you should do is to extract the **Server** and **Common** folders from the `Assets.zip` file from your Hytale installation. Exclude the `Prefabs` folder from **Server** since we won't need it. The main file we will be referencing a lot is the `Template_Livestock.json` since it contains a lot of useful tricks when it come to instructions.
+
+If you are modding for **Release** it can be found here: `%appdata%\Hytale\install\release\package\game\latest`
+
+If you are modding for **Pre-release** it can be found here: `%appdata%\Hytale\install\pre-release\package\game\latest`
+
+If you installed Hytale in custom directory then you can find Hytale from there instead.
+
+Doing this will make it significantly easier to mod and find other assets like animations, sound effects and particle effects.
+
+Keep in mind that we will be referencing the `Server\NPC\Roles` folder a lot during this guide so keep that folder bookmarked.
+
 ## TL;DR
 NPCs are derived from **Role** JSON files.
+
+NPC roles can be found in the `Server\NPC\Roles` folder in the Hytale `Assets.zip` archive.
 
 **Roles** have **Instructions** with **Sensors, Sub-Instructions, Actions Body motions & Head motions** which tell them how to interact with the world.
 

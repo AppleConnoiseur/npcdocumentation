@@ -1,0 +1,166 @@
+---
+title: NPC Roles
+description: Step into your new role, Ms Fairy.
+---
+# Describing your role
+> “*All the world's a stage, and all the men and women merely players: they have their exits and their entrances; and one man in his time plays many parts, his acts being seven ages.*”
+>
+>Shakespeare (As You Like It)
+
+Roles make up the core of a NPC in how it interacts with the world. It defines things like appearance, max health, equipped items, what it drops upon death, etc. at its most basic functionality. Think of this as defining how it looks and the statistics it has.
+
+Roles can be changed during the lifetime of an NPC, so the possibilities are well, not endless, but many in how your NPC becomes unique.
+## Types
+Roles come in three flavors: **Generic**, **Variant** & **Abstract**.
+
+Out of all three is **Generic** the default one. It is declared as is with no preprocessing needing to be done. What is preprocessing you wonder? In short it looks at the Json file it is and see if anything needs to be changed before Hytale reads it for its data.
+
+It is rarely used outside of testing because **Templates** are a widely used practice, because it saves time and let you reuse data and instructions across several roles with just a simple reference. The most reused templates can be found in the `Server\NPC\Roles\_Core\Templates` folder.
+
+**Variant** and **Abstract** are tied together because one type relies on the other in order to do its preprocessing magic. The short version is that the **Variant** role copies the data from the **Abstract** role and then overwrite it withs own on top of that. A example will help visualize it.
+
+> **Template_Shape.json file**
+```json
+{
+    "Type":"Abstract",
+    "Appearance": { "Compute": "Appearance" },
+    "MaxHealth": { "Compute": "MaxHealth" },
+    "KnockbackScale": 0.5,
+    "Parameters":{
+        "Appearance":{
+            "Value":"Point",
+            "Description":"Model to be used"
+        },
+        "MaxHealth":{
+            "Value": 10,
+            "Description":"Max health for the NPC"
+        }
+    }
+}
+```
+
+> **Cube.json file**
+```json
+{
+    "Type":"Variant",
+    "Reference":"Template_Shape",
+    "Modify":{
+        "Appearance": "Cube",
+        "MaxHealth": 30
+    }
+}
+```
+
+Variant **Cube** inherits from the Abstract **Template_Shape** and creates Json file that looks like this in memory after all preprocessing is done:
+> **Cube role Json in memory**
+```json
+{
+    "Type":"Variant",
+    "Reference":"Template_Shape",
+    "Appearance": "Cube",
+    "MaxHealth":30,
+    "KnockbackScale": 0.5
+}
+```
+
+While this example has a incomplete role it helps to illustrate how role **Types** work for roles at a high level.
+## Parameters and modifying them
+You may noted that in the previous example was the fields **Parameters** and **Modify**. They are used with the preprocessor to help to both make **Abstract** roles modifiable in their **Variant** roles, they are also used in other contexts when it come to making NPCs. Such as passing data to **Components** (Not to be confused with components in the **ECS**)
+
+We can set the parameters easily in our role Json file.
+```json
+"Parameters":{
+    "ParameterName1":{
+        "Value":"Apples",
+        "Description":"Put a short description that describes this parameter well. In this case a string."
+    },
+    "ParameterName2":{
+        "Value": 15,
+        "Description":"Numbers work well, integers and floating points are all good."
+    },
+    "ParameterName3":{
+        "Value": ["Food_Pie_Apple", "Food_Kebab_Vegetable"],
+        "Description":"You can store arrays of strings."
+    }
+}
+```
+
+Also easily modify them in another role Json file that references our template:
+```json
+"Modify": {
+    "ParameterName1": "Oranges",
+    "ParameterName2": 42.67,
+    "ParameterName3": ["Rock_Stone"]
+}
+```
+## Compute or more preprocessing
+This **Compute** thing has appeared several times now but never truly been addressed, but it will be now.
+```json
+{ "Compute": "ParameterName" }
+```
+This wonderful tool can be used for more than just modifying parameters in a Role, in fact its vital when creating **Instructions** in order to ensure that you can correctly pass data to them in a readable way. Instead of using [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)) you can just pass the parameter through a **Compute** preprocessor.
+
+At its most basic level all it does is pass a value from your **Parameters** but it can do much more. Like math for instance.
+```json
+"Parameters":{
+    "First":{
+        "Value":2,
+        "Description":"First number."
+    },
+    "Second":{
+        "Value": 3,
+        "Description":"Second number."
+    }
+},
+"MaxHealth": { "Compute": "First + Second"}
+```
+
+It supports the most common mathematical operations like addition, subtraction, multiplication and division.
+- `+` : Addition **Example:** First + Second
+- `-` : Subtraction **Example:** First - Second
+- `*` : Multiplication **Example:** First * Second
+- `/` : Division **Example:** First / Second
+
+**Compute** also supports more advanced operations like negating values and exponents:
+- `-` : Negates the numeric value after it. **Example:** 10 + -10 = 0
+- `E` : Scientific notation for large numbers. **Example:** 5**E**5 = 500,000
+- `%` : Remainder, also known as modulus. **Example:** 35 % 32 = 3
+- `**` : Exponent like 10² which would give you 100. **Example:** 10\*\*2 = 100
+
+You can also use open brackets like `( )` to make more complicated computation. **Example:** MaxHealth + (MaxHealth / 2)
+
+Square brackets `[ ]` are used for making arrays. Like string and numeric arrays in **Compute**. But the usage is quite limited at the moment.
+- **\[0, 1, 2\]** : Numeric array
+- **\["A", "B", "C"\]** : String array
+
+Comparing things can also be done. Useful for setting a value in the **"Enabled** field in a **Instruction** for example.
+- `==` : Equals, if the left and right side are equal it is **true**. **Example:** left == right
+- `!=` : Not equal, if the left and right side are not equal it is **true**. **Example:** left != right
+- `>` : Greater than, if the left side is greater than the right side it is **true**. **Example:** left \> right
+- `>=` : Greater than or equals, if the left side is greater than or equals to the right side it is **true**. **Example:** left \>= right
+- `<` : Lesser than, if the left side is lesser than the right side it is **true**. **Example:** left \< right
+- `<=` : Lesser than or equals, if the left side is lesser than or equals to the right side it is **true**. **Example:** left \<= right
+
+There are other functions with **Compute** too that Hytale added in order to make their Json preprocessing much easier. Here are all of them found so far:
+- **true** : Boolean constant for true.
+- **false** : Boolean constant for false.
+- **PI** : The value of [pi](https://en.wikipedia.org/wiki/Pi).
+- **max**( *first, second* ) : Puts the biggest of the two numbers in the **Compute**.
+- **min**( *first, second* ) : Puts the smallest of the two numbers in the **Compute**.
+- **isEmpty**( *argument* ) : Checks if the provided string or **Parameter** is empty.
+- **isEmptyStringArray**( *argument* ) : Checks if the provided string array or **Parameter** is empty.
+- **isEmptyNumberArray**( *argument* ) : Checks if the provided number array or **Parameter** is empty.
+- **random**() : Provides a random number between 0.0 and 1.0.
+- **randomInRange**( *first, second* ) : Provides a random number between *first* and *second* arguments.
+- **makeRange**( *argument* ) : Makes a number array with two values that are the same as the *argument*.
+
+## Motion controllers
+## Instructions
+### Template_Livestock.json is your bible
+### Root instruction
+### Main instructions
+### Interaction instructions
+### Death instructions
+## Good practices
+## Role Json file anatomy (Technical bits)
+## TL;DR
