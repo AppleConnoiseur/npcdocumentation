@@ -162,11 +162,37 @@ As you can see from these transitions this makes a complete chain of states wher
 }
 ```
 
-The **Sensor** and **Action** `"State"` are interlinked, and Hytale makes sure of that. A lot goes on in the background to ensure NPCs will infinitely get stuck in a **State**. Hytale outright refuses you to add or update **Roles** if **States** aren't linked.
+The **Sensor** and **Action** `"State"` are interlinked, and Hytale makes sure of that. A lot goes on in the background to ensure NPCs will not infinitely get stuck in a **State**. Hytale outright refuses you to add or update **Roles** if **States** aren't linked.
 ## Sub-states
-The **Sub-state** is like a **State** but its a smaller part of one. By default you enter one even if you haven't defined it. For example if you just go into the **State** of `"Idle"` without defining it **Sub-state** you in fact enter the `"Idle.Default"` **State**. Its more of a convenience feature instead of having to type it in every time you just want to enter the `"Idle"` **State**.
+The **Sub-state** is like a **State** but its a smaller part of one. By default you enter one even if you haven't defined it. For example if you just go into the **State** of `"Idle"` without defining its **Sub-state** you in fact enter the `"Idle.Default"` **State**. Its more of a convenience feature instead of having to type it in every time you just want to enter the `"Idle"` **State**.
 
 But the main feature of **Sub-states** is that it let you partition states into different tasks you want a NPC to perform. For example you can make a Job driver where the NPC does work and it switches states until it exits it and goes back to being `"Idle"`.
+
+Within a **State** can you set or check what **Sub-state** it has by simply putting `.SubStateName` as its `State`. It is the `.` in the name that determines that it's a `Sub-state` its setting or checking.
+
+> **Checking for sub-state**
+
+```json
+{
+    "Sensor":{
+        "Type":"State",
+        "State":".SubStateName"
+    }
+}
+```
+
+> **Setting a sub-state**
+
+```json
+{
+    "Actions":[
+        {
+            "Type":"State",
+            "State":".SubStateName"
+        }
+    ]
+}
+```
 
 *In the example below the details will be omitted for clarity.*
 
@@ -377,3 +403,6 @@ You can study my old **Role** I used for my Little Helpers mod for insights on h
 
 **Note:** This won't work in Hytale as is because it uses **Plugin** specific **Action & Sensors**. And it uses **Components** that aren't from Hytale either.
 ## Limitations
+You can't check for **Sub-states** inside a `"InteractionInstruction"`, so you have to type out the full **State** name with **Sub-state** included.
+
+While **States** are powerful in their simplicity, they don't allow for sub-**Sub-states**. To achieve that you would want to use the **Flag** system with its own **Action** and **Sensor**.
